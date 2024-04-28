@@ -51,3 +51,10 @@
 # ls
 # cd ls -ltr
 # cat -json.log
+
+
+# docker run --name test_logs -dit alpine:latest sh -c "while true; do $(echo time) sleep10; done"
+# docker ps
+# docker logs <container_id>
+# docker logs <container_id> -follow
+# docker logs <id> --detail
