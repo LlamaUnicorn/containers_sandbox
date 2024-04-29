@@ -46,15 +46,29 @@
 
 # Change logging driver: run container with --log-driver or --log-opt
 
+# Check logs in docker folder
 # docker run --name test -dit alpine:latest sh -c "while true; do $(echo time) sleep 10; done"
 # cd /var/lib/docker/containers
+# if Permission Denied switch to root user: sudo -i
+# use 'exit' to switch back
 # ls
-# cd ls -ltr
-# cat -json.log
+# cd <container_id> ls -ltr
+# cat <container_id>-json.log
 
 
-# docker run --name test_logs -dit alpine:latest sh -c "while true; do $(echo time) sleep10; done"
+# Check logs via command
+# docker run --name test_logs -dit alpine:latest sh -c "while true; do $(echo time) sleep 10; done"
 # docker ps
-# docker logs <container_id>
-# docker logs <container_id> -follow
-# docker logs <id> --detail
+
+# docker logs <container_id> or /test_logs
+# docker logs <container_id> --follow | -f
+# docker logs <id> --details
+# show last 8 entries: docker logs /test_logs --tail 8
+# show timestamps: docker logs /test_logs -t
+# combine flags: docker logs /test_logs -t --tail 10
+
+# grep: docker logs /test_logs | grep pattern
+# docker logs /test_logs | grep error
+
+
+
