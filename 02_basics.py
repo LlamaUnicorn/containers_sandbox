@@ -71,4 +71,28 @@
 # docker logs /test_logs | grep error
 
 
+# Images
+# pull an image: docker image pull ubuntu:latest
+# docker image ls | --all
+# show digests (control checksum): docker image ls --digests
+# docker image history d8e1f9a8436c
 
+# docker info
+# look for Storage Driver: overlay2
+# Check images:
+# sudo -i
+# cd /var/lib/docker/overlay2
+# ls -ltr
+
+# Inspect image
+# docker image inspect <id>
+
+# Save image as tar-file
+# docker image pull nginx:latest
+# docker image ls
+# docker image save <id> > mynginx.tar
+# ls -ltr
+# ls -sh mynginx.tar
+
+# Save reserve copy:
+# docker save --output nginx.tar nginx
