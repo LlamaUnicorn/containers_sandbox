@@ -96,3 +96,69 @@
 
 # Save reserve copy:
 # docker save --output nginx.tar nginx
+
+
+# Create and Save image via commit without the dockerfile (install ping into ubuntu image and save changed image)
+# docker run -dit --name ubuntu ubuntu:latest
+# docker exec -it ubuntu sh
+# ping google.com
+# >>> sh: 1: ping: not found
+# apt update && apt install iputils-ping -y
+# now it will work: ping google.com
+# Save the installed 'ping' to our myubuntu image
+# exit
+# docker commit <container_name> <new_image_name>
+# docker commit ubuntu myubuntu
+# Check available images:
+# docker images
+# Run the new container from created image: docker run -it --name myubuntu myubuntu sh
+
+
+# Dockerfile
+# Dockerfile has commands for building a container
+# Every line is a new layer
+# FROM: define OS for container
+# LABEL: Meta data for image
+# ENV: env variables
+# RUN:
+# CMD: default command that runs after the container is built
+# ENTRYPOINT: entry point for the container
+# ADD: copy files from host to container
+# EXPOSE: what ports are 'published' on container creation
+# WORKDIR: working directory for all previous commands (FROM, LABEL, etc.)
+# USER: UID (user ID) or GID (group ID) for running commands
+# VOLUME: create mount point
+
+# Cache
+# Check if an image is in cache and retrieve it
+
+
+# Image creation optimizations
+# Multilayer dockerfile
+# vi Dockerfile
+# FROM ubuntu:latest
+# ENV HOME /root
+# LABEL ubuntu=myubuntu
+# ENTRYPOINT ["sleep"]
+# CMD ["50"]
+# RUN useradd -m -G root testuser
+# USER root
+# RUN apt-get update && apt-get install net-tools -y
+# RUN apt-get install iputils-ping -y
+
+# Run our Dockerfile
+# docker build --tag myubuntu_image .
+
+# docker images ls --digests
+
+# We've created unoptimized image containing multiple RUN commands. Let's fix that.
+# FROM ubuntu:latest
+# ENV HOME /root
+# LABEL ubuntu=myubuntu
+# ENTRYPOINT ["sleep"]
+# CMD ["50"]
+# USER root
+# RUN apt-get update && apt-get install net-tools -y && apt-get install iputils-ping -y && useradd -m -G root testuser
+
+# docker build --tag myubuntu_image1 .
+
