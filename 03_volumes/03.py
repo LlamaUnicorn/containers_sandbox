@@ -49,3 +49,9 @@
 # cd /root/testing/
 # ls -ltr
 # cat myfile
+
+# Create anonymous volume
+# docker run -dit --name test_vol --volume /myapp alpine:latest
+# docker container ls -a
+# apt update && apt install jq -y
+# docker inspect -f '{{ json .Mounts }}' <container_id> | jq
