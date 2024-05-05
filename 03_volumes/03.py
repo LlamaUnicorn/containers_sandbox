@@ -55,3 +55,16 @@
 # docker container ls -a
 # apt update && apt install jq -y
 # docker inspect -f '{{ json .Mounts }}' <container_id> | jq
+
+# Create named volume
+# docker volume create myvolume
+# docker volume inspect myvolume
+
+# Use named volume with a new container. Multiple containers can use one volume.
+# docker container run -dit --name mycentos --volume myvolume:/test centos:latest
+
+# Use mount
+# docker run -dit --name mynginx --mount source=myvol2,target=/test nginx:latest
+# docker ps
+# docker inspect -f '{{ json .Mounts }}' <container_id> | jq
+
