@@ -1,4 +1,7 @@
+# Basic info
 # docker -v
+# docker info
+
 
 # Run first container
 # docker run --name my_first_container busybox:latest
@@ -73,6 +76,7 @@
 
 # Images
 # pull an image: docker image pull ubuntu:latest
+# docker image ls
 # docker image ls | --all
 # show digests (control checksum): docker image ls --digests
 # docker image history d8e1f9a8436c
@@ -85,7 +89,11 @@
 # ls -ltr
 
 # Inspect image
-# docker image inspect <id>
+# Useful info: Env, Cmd, Layers
+# docker image inspect <id>|<container_name>
+# Inspect ENV: docker image inspect hello-world | jq .[].Config.Env
+# Inspect CMD: docker image inspect hello-world | jq .[].Config.Cmd
+# Inspect Layers: docker image inspect hello-world | jq .[].RootFS.Layers
 
 # Save image as tar-file
 # docker image pull nginx:latest
