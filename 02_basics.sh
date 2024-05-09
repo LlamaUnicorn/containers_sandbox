@@ -32,6 +32,7 @@ docker run -it --name my_container1 busybox:latest ping -c 6 localhost
 
 
 #Container states
+# ps shows only active running containers. --all shows all containers
 docker ps --all | -a
 docker container ls -a
 
@@ -45,6 +46,12 @@ docker container unpause my_container
 
 #Stop a container
 docker container stop my_container
+
+#Kill a container that's not stopping
+docker container kill <container_id>
+
+#Remove a container
+docker rm <container_id>
 
 #Create but don't run a container
 docker container create --name my_container2 alpine:latest
@@ -104,8 +111,14 @@ docker login -u <username> --password-stdin private-docker-registry.example.com 
 #windows powershell:
 Get-Content docker_password | docker login -u <username> --password-stdin private-docker-registry.example.com
 
+#Show images
 docker image ls
 docker image ls | --all
+
+#Remove image
+docker rmi <image_id>
+#You can't remove image that is being used by another container. Remove the container before removing the image.
+
 #show digests (control checksum):
 docker image ls --digests
 docker image history d8e1f9a8436c
