@@ -115,6 +115,9 @@ Get-Content docker_password | docker login -u <username> --password-stdin privat
 docker image ls
 docker image ls | --all
 
+#Tag image
+docker tag <image_id> <tag_name>
+
 #Remove image
 docker rmi <image_id>
 #You can't remove image that is being used by another container. Remove the container before removing the image.
@@ -171,9 +174,10 @@ docker run -it --name myubuntu myubuntu sh
 #Dockerfile has commands for building a container
 #Every line is a new layer
 FROM: define OS for container
-LABEL: Meta data for image
+LABEL author="Dave": Meta data for image
+LABEL description="An example Dockerfile"
 ENV: env variables
-RUN:
+RUN: apt-get install python
 CMD: default command that runs after the container is built
 ENTRYPOINT: entry point for the container
 ADD: copy files from host to container
@@ -184,6 +188,33 @@ VOLUME: create mount point
 
 #Cache
 #Check if an image is in cache and retrieve it
+
+#Build context. Pass the contents of URL/folder to docker daemon
+docker build https://github.com/sathyabhat/sample-repo.git#mybranch
+
+#Build context on tag
+docker build https://github.com/sathyabhat/sample-repo.git#mytag
+
+#Build on pull request
+docker build https://github.com/sathyabhat/sample-repo.git#pull/1337/head
+
+#You can build context on .tar files
+#Passing root / to context will pass the contents of a drive to docker daemon
+
+#Dockerignore example
+*/temp*
+.DS_Store
+.git
+
+#BuildKit allows you to pass secrets into layers without the secret being in the final layer.
+#Switch to legacy builder
+DOCKER_BUILDKIT=0 docker build .
+
+#Build test image
+FROM ubuntu:latest
+CMD echo Hello World!
+
+docker build .
 
 
 #Image creation optimizations
