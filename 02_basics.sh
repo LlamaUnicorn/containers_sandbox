@@ -115,8 +115,12 @@ Get-Content docker_password | docker login -u <username> --password-stdin privat
 docker image ls
 docker image ls | --all
 
+#Tag is a unique identifier of an image. It is Recommended not to use default 'latest' tag 
+# since it overwrites previous versions and it's harder to rollback to a stable version.
 #Tag image
 docker tag <image_id> <tag_name>
+docker tag f2bafcc sathyabhat/hello-world
+docker build -t sathyabhat/hello-world .
 
 #Remove image
 docker rmi <image_id>
@@ -173,7 +177,9 @@ docker run -it --name myubuntu myubuntu sh
 #Dockerfile
 #Dockerfile has commands for building a container
 #Every line is a new layer
-FROM: define OS for container
+FROM: define OS for container or a base image.
+FROM <image>[:<tag>] [AS <name>]
+
 LABEL author="Dave": Meta data for image
 LABEL description="An example Dockerfile"
 ENV: env variables
