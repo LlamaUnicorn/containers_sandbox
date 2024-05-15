@@ -174,21 +174,71 @@ docker images
 docker run -it --name myubuntu myubuntu sh
 
 
+
 #Dockerfile
 #Dockerfile has commands for building a container
 #Every line is a new layer
 FROM: define OS for container or a base image.
 FROM <image>[:<tag>] [AS <name>]
 
+WORKDIR: working directory for all previous commands (RUN, CMD, ENTRYPOINT and ADD). Useful for running commands in different directories
+WORKDIR: /path/to/directory
+When chained multiple WORKDIR they each create a new folder within current directory
+WORKDIR: /app
+WORKDIR: src
+WORKDIR: media
+results in /app/src/media
+
+ADD and COPY
+
+Allow you to transfer files from host to the container.
+COPY for basic files transfer. Recommended for local file transfer over ADD.
+COPY will create destination if it doesnt exist; owner is the root user; files end without slashes
+
+ADD extract files from compressed TAR or URL
+ADD/COPY <source> <destination>
+
+Copy single tar file but don\'t decompress:
+COPY hugo /app/
+
+Copy and decompress the file
+ADD https://github.com/.../hugo.tar.gz /app/
+
+Change owners
+ADD/COPY --chown=<user>:<group> <source> <destination>
+
+ADD/COPY requirements.txt /usr/share/app
+
+Using wildcards:
+ADD/COPY *.py /app/
+
+RUN
+RUN will execute any command during the build step of the container, i.e. runs ONLY when the container is being built. Creates a new layer.
+RUN <command>
+
+Has two forms: shell and exec.
+
+Shell allows using variables, pipes, chains in the instruction itself
+Embed kernel info into the home directory:
+RUN echo 'uname -rv' > $HOME/kernel-info
+
+In exec form:
+RUN ["executible", "parameter1", "parameter2"]
+Exec is preferred if you dont have to use pipes, variables, etc.
+
+RUN: apt-get install python
+
+
 LABEL author="Dave": Meta data for image
 LABEL description="An example Dockerfile"
+
 ENV: env variables
-RUN: apt-get install python
 CMD: default command that runs after the container is built
 ENTRYPOINT: entry point for the container
 ADD: copy files from host to container
 EXPOSE: what ports are 'published' on container creation
-WORKDIR: working directory for all previous commands (FROM, LABEL, etc.)
+
+
 USER: UID (user ID) or GID (group ID) for running commands
 VOLUME: create mount point
 
