@@ -244,6 +244,8 @@ VOLUME: create mount point
 
 #Cache
 #Check if an image is in cache and retrieve it
+#To prevent caching use 
+docker build --no-cache 
 
 #Build context. Pass the contents of URL/folder to docker daemon
 docker build https://github.com/sathyabhat/sample-repo.git#mybranch
