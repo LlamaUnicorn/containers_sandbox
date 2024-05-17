@@ -191,7 +191,7 @@ results in /app/src/media
 
 ADD and COPY
 
-Allow you to transfer files from host to the container.
+Allows you to transfer files from host to the container.
 COPY for basic files transfer. Recommended for local file transfer over ADD.
 COPY will create destination if it doesnt exist; owner is the root user; files end without slashes
 
@@ -229,13 +229,50 @@ Exec is preferred if you dont have to use pipes, variables, etc.
 RUN: apt-get install python
 
 
+CMD & ENTRYPOINT define which command is executed when running a container.
+CMD: default command that runs after the container is built
+ENTRYPOINT: entry point for the rontainer. 
+You can specify the entrypoint as executable with a param and run the container.
+
+Both have exec and shell forms. 
+
+Exec:
+
+CMD ["executable", "param1", "param2"]
+
+Default params to ENTRYPOINT:
+CMD ["param1", "param2"]
+
+ENTRYPOINT ["executable", "param1", "param2"]
+
+Shell:
+CMD command param1 param2
+
+ENTRYPOINT command param1 param2
+
+Example of setting up entrypoint as curl and running it to get the weather for your location:
+
+The ENTRYPOINT in your Dockerfile is set to ["curl", "-s"]. This means that any arguments you pass to docker run will be appended to curl -s
+This will work only when ENTRYPOINT is in the exec mode: 
+ENTRYPOINT ["executable", "param1", "param2"]
+
+FROM ubuntu:latest
+RUN apt-get update && apt-get install curl -y
+ENTRYPOINT ["curl", "-s"]
+
+docker build -t sathyabhat/curl .
+
+docker run sathyabhat/curl wttr.in
+
+
+
+
+
+
 LABEL author="Dave": Meta data for image
 LABEL description="An example Dockerfile"
 
 ENV: env variables
-CMD: default command that runs after the container is built
-ENTRYPOINT: entry point for the container
-ADD: copy files from host to container
 EXPOSE: what ports are 'published' on container creation
 
 
