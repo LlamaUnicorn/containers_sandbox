@@ -265,14 +265,30 @@ docker build -t sathyabhat/curl .
 docker run sathyabhat/curl wttr.in
 
 
+ENV: env variables are persistent through container runtime.
 
+Only one variable can be set per line:
+ENV <key> <value>
+ENV LOGS_DIR="var/log"
+
+Multiple variables can be set:
+ENV <key>=<value>
+ENV APP_DIR /app/
+
+Explore the env:
+docker inspect sathyabhat/env | jq ".[0].Config.Env"
+
+Change container variables at run:
+docker run -it -e LOGS_DIR="/logs/" sathyabhat/env
+
+Another way to check variables:
+printenv | grep LOGS
 
 
 
 LABEL author="Dave": Meta data for image
 LABEL description="An example Dockerfile"
 
-ENV: env variables
 EXPOSE: what ports are 'published' on container creation
 
 
