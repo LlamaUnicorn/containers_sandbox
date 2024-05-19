@@ -285,15 +285,26 @@ Another way to check variables:
 printenv | grep LOGS
 
 
+VOLUME: create mount point
+VOLUME /var/logs/nginx
 
+
+EXPOSE: what ports are 'published' on container creation. Does not publish the port. To publish the port use docker run with -p flag.
+EXPOSE <port> [<port>/<protocol>...]
+EXPOSE 80/tcp
+EXPOSE 80/udp
+
+Map hosts port 8080 to containers 80
+docker run -d -p 8080:80 sathyabhat:web
+
+
+LABEL add metadata to an image
 LABEL author="Dave": Meta data for image
 LABEL description="An example Dockerfile"
 
-EXPOSE: what ports are 'published' on container creation
 
 
 USER: UID (user ID) or GID (group ID) for running commands
-VOLUME: create mount point
 
 #Cache
 #Check if an image is in cache and retrieve it
