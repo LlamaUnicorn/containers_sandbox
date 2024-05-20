@@ -358,6 +358,7 @@ docker build --tag myubuntu_image .
 docker images ls --digests
 
 #We've created unoptimized image containing multiple RUN commands. Let's fix that.
+# RUN ADD COPY create layers
 FROM ubuntu:latest
 ENV HOME /root
 LABEL ubuntu=myubuntu
@@ -368,3 +369,8 @@ RUN apt-get update && apt-get install net-tools -y && apt-get install iputils-pi
 
 docker build --tag myubuntu_image1 .
 
+
+
+Multistage builds
+When you need build time dependencies but they are not needed during runtime.
+Build layers are used to build the image. Final image is used to run container.
