@@ -1,0 +1,10 @@
+FROM python:3-alpine 
+LABEL description="Dockerfile fo Python script which prints Hello, Name"
+COPY hello-world.py /app/
+ENV NAME=Readers
+CMD python3 /app/hello-world.py
+
+docker build -t basics_exercise .
+docker images
+docker run basics_exercise:latest
+docker run -e NAME=all basics_exercise:latest

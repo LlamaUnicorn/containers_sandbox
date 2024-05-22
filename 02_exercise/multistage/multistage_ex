@@ -1,0 +1,5 @@
+docker built -t multistage_1 .
+docker images
+#image is 1 GB
+
+Multistage build
