@@ -3,3 +3,10 @@ docker images
 #image is 1 GB
 
 Multistage build
+Two FROM statements
+At first stage you build packages using python:3 image with neccessary tools.
+Then you copy the results, reinstall them from cache and delete cached files.
+
+docker built -t multistage3
+
+Final result is just 80 MB down from 1 GB!
