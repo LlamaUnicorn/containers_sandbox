@@ -1,0 +1,20 @@
+When you stop a container the data within it persists.
+When the container is removed the data within it is gone too.
+
+Types of storage:
+- tmpfs mounts are stored in host's memory. Once the container is stopped the data is gone. Best for containers that generate data that doesn't need to be stored.
+docker run -it --name docker-tmpfs-test --tmpfs /tmpfs-mount ubuntu bash
+docker inspect docker-tmpfs-test | jq ".[0].HostConfig.Tmpfs"
+
+- bind mounts: host's directory is mounted into the container. Best for running production containers with source bind mounts. No need to rebuild the image on change.
+docker run -it --name bind-mount-container -v $HOME:/host-home ubuntu bash
+docker inspect bind-mount-container | jq ".[0].Mounts"
+
+Inspect bind mount:
+docker run -it --name bind-mount-container -v $HOME:/host-home ubuntu bash
+cd /host-home
+ls
+echo "This is a file created from container having kernel 'uname -r'" > host-home-file.txt
+
+Safety tip: since the host is vulnerable to changes made in a container you can bind mount in read-only mode :ro.
+docker run -it --name read-only-bind-mount -v %HOME:/host-home:ro ubuntu bash

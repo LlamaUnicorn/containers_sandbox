@@ -1,0 +1,3 @@
+Create Dockerfile
+docker build -t newsbot .
+docker run -e NBT_ACCESS_BOT=token
