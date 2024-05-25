@@ -18,3 +18,20 @@ echo "This is a file created from container having kernel 'uname -r'" > host-hom
 
 Safety tip: since the host is vulnerable to changes made in a container you can bind mount in read-only mode :ro.
 docker run -it --name read-only-bind-mount -v %HOME:/host-home:ro ubuntu bash
+
+- volumes are recommended method of persistent data storage.
+Volumes are managed by Docker. Can be shared between multiple containers.
+
+Volume subcommands
+docker volume create	- create named volume
+	docker volume create --name=custom_name --label=custom_metadata
+docker volume inspect	- displays detailed information. Useful to get volume's location for copy/backup.
+	docker volume --inspect volume_name
+docker volume ls	- shows volumes list
+docker volume prune	- removes all unused (by at least one container) local volumes
+	docker volume prune --force	- will not ask for confirmation
+docker volume rm	- removes volumes. When the volume is attached to the container you will get an error.
+	docker volume rm <image_name>
+	'unable to remove volume: volume is in use - [6074757a]
+	docker volume inspect 6074757a
+
