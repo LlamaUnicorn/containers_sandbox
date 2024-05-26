@@ -35,3 +35,15 @@ docker volume rm	- removes volumes. When the volume is attached to the container
 	'unable to remove volume: volume is in use - [6074757a]
 	docker volume inspect 6074757a
 
+
+Create a container with a volume attached. Create volume named 'data' and put it in 'data' inside the container:
+docker run --name container-with-volume -v data:/data ubuntu
+
+Create a volume named 'info':
+docker volume create info
+docker volume inspect info
+
+Refer the created volume:
+docker run -it --name info-container -v info:/container-info ununtu
+
+The data within the volume persists when volume is mounted in different containers.
