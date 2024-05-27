@@ -1,0 +1,53 @@
+Docker network drivers:
+
+1. Bridge
+2. Host
+3. Overlay
+4. Macvlan
+5. None
+
+1. Bridge is a user defined network that allows for all containers connected on the same network to communicate with each other.
+2. Any traffic coming to the host is routed to the container. Publishing ports make no sense in this case.
+3. Overlay networks create a network spanning multiple docker hosts.
+4. Provides physical network interface.
+5. None for completely isolated applications. No access whatsoever.
+docker run -d --name nginx --network=none -p 80:80 nginx
+
+
+docker network
+
+Manage networks
+
+Commands:
+  connect     Connect a container to a network
+  create      Create a network
+  disconnect  Disconnect a container from a network
+  inspect     Display detailed information on one or more networks
+  ls          List networks
+  prune       Remove all unused networks
+  rm          Remove one or more networks
+
+docker network ls
+docker network inspect <network id or name>
+
+docker run -d --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass mysql:8
+follow logs: docker logs -f mysql
+
+Create admin page: docker run -d --name adminer -p 8080:8080 adminer
+docker logs -f adminer
+
+
+docker network create <network name>
+docker network create database
+
+remove containers and connect them to the new network
+docker run -d --network database --name mysql -p 3306:3306 -e MY_SQL_ROOT_PASSWORD=password myslq:8
+docker logs -f mysql
+
+inspect connected to the network containers:
+docker network inspect database | jq ".[0].Containers"
+
+Connect container to a named network
+docker network connect <network name> <container name>
+docker network connect database adminer
+docker network disconnect bridge adminer
